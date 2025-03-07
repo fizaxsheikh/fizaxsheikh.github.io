@@ -8,7 +8,7 @@ import sr from '@utils/sr';
 import { usePrefersReducedMotion } from '@hooks';
 
 const StyledJobsSection = styled.section`
-  max-width: 700px;
+  max-width: 900px;
 
   .inner {
     display: flex;
@@ -176,6 +176,7 @@ const Jobs = () => {
             frontmatter {
               title
               company
+              shortCompany
               location
               range
               url
@@ -262,7 +263,7 @@ const Jobs = () => {
                   tabIndex={activeTabId === i ? '0' : '-1'}
                   aria-selected={activeTabId === i ? true : false}
                   aria-controls={`panel-${i}`}>
-                  <span>{company}</span>
+                  <span>{node.frontmatter.shortCompany || company}</span>
                 </StyledTabButton>
               );
             })}

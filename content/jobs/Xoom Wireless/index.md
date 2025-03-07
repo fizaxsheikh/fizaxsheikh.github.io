@@ -1,5 +1,5 @@
 ---
-date: '2016-12-21'
+date: '2017-08-01'
 title: 'Operations and Client Relations Assistant Manager '
 company: 'Xoom Wireless'
 location: 'Oklahoma City, OK'

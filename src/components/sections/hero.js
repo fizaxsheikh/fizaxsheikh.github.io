@@ -63,12 +63,19 @@ const Hero = () => {
   const one = <h1>Hi, my name is</h1>;
   const two = <h2 className="big-heading">Fiza Sheikh.</h2>;
   const three = <h3 className="big-heading">I deliver results that shatter boundaries.</h3>;
+
+  const six = (
+    <h3 className="typing-text">
+      I'm a <span></span>
+    </h3>
+  );
+
   const four = (
     <>
       <p>
-        Tech-driven consultant with a passion for crafting equitable and innovative solutions that
-        empower communities and transform industries. Focused on blending technology, law, and
-        design to drive impactful change.
+        I’m not here to maintain the status quo. I’m here to break it, redesign it, and leave no one
+        behind in the process. If that sounds like the kind of energy you want in the room, let’s
+        talk.
       </p>
     </>
   );
@@ -78,7 +85,7 @@ const Hero = () => {
     </Link>
   );
 
-  const items = [one, two, three, four, five];
+  const items = [one, two, six, three, four, five];
 
   return (
     <StyledHeroSection>

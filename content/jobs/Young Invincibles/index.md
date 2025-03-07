@@ -1,5 +1,5 @@
 ---
-date: '2016-12-21'
+date: '2023-09-01'
 title: 'Young Advocates Intern'
 company: 'Young Invincibles'
 location: 'Los Angeles, CA'

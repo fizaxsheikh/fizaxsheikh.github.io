@@ -1,7 +1,7 @@
 ---
-date: '2015-12-21'
+date: '2022-07-01'
 title: 'Brand Strategy and Digital Operations Consultant'
-company: '@RitzuArt on Tiktok'
+company: 'RitzuArt on Tiktok'
 location: 'Remote'
 range: 'Jun 2022 - Dec 2023'
 url: 'https://www.tiktok.com/@ritzuart?lang=en'

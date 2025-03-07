@@ -1,7 +1,8 @@
 ---
 date: '2025-01-01'
-title: 'Tech Fellow'
-company: 'ACM-W | UCLA'
+title: 'Product & Software Development Intern'
+company: 'Association for Computing Machinery - Women (ACM-W) | UCLA'
+shortCompany: 'ACM-W | UCLA'
 location: 'Los Angeles, CA'
 range: 'Jan 2025 - Present'
 url: 'https://w.uclaacm.com/'

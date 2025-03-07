@@ -446,6 +446,63 @@ const GlobalStyle = createGlobalStyle`
   ${TransitionStyles};
 
   ${PrismStyles};
+
+  .typing-text {
+    font-size: clamp(40px, 8vw, 80px);
+    font-weight: 600;
+    min-width: 280px;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.typing-text span {
+    position: relative;
+}
+
+.typing-text span::before {
+    content: "Software Developer";
+    color: #ff5fb0;
+    animation: words 10s infinite;
+}
+
+.typing-text span::after {
+    content: "";
+    background-color: transparent;
+    position: absolute;
+    width: 3px; /* Adjust cursor width */
+    height: 80%; /* Matches font size */
+    border-left: 3px solid black;
+    right: -5px;
+    top: 0; /* Aligns it with text properly */
+    animation: cursor 0.6s infinite;
+}
+
+@keyframes cursor {
+    to {
+        border-left: 3px solid #ff5fb0;
+    }
+}
+
+@keyframes words {
+    0%, 16% {
+        content: "Data Analyst.";
+    }
+    17%, 32% {
+        content: "Project Manager.";
+    }
+    33%, 48% {
+        content: "Passionate Dancer.";
+    }
+    49%, 64% {
+        content: "Pre-Law Tech Consultant.";
+    }
+    65%, 80% {
+        content: "Poet at Heart.";
+    }
+    81%, 100% {
+        content: "Proud Dog Mom.";
+    }
+}
 `;
 
 export default GlobalStyle;

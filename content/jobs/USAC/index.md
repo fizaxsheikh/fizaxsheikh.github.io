@@ -1,7 +1,8 @@
 ---
-date: '2015-12-21'
+date: '2024-04-01'
 title: 'Office of the President Intern'
-company: 'USAC | UCLA '
+company: 'Undergraduate Students Association Council | UCLA'
+shortCompany: 'USAC | UCLA '
 location: 'Los Angeles, CA'
 range: 'Apr 2024 - Jun 2024'
 url: 'https://www.usac.ucla.edu/'

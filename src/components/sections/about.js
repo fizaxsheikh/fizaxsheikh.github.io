@@ -134,8 +134,12 @@ const About = () => {
               I’m <strong>Fiza Sheikh</strong>, a senior at UCLA majoring in Economics, with a
               vision as dynamic as my journey. Shaped by resilience and a commitment to meaningful
               impact, I’ve found my passion at the intersection of technology, consulting, and law.
-              My ultimate goal?
             </p>
+
+            <p>
+              <strong>My ultimate goal?</strong>
+            </p>
+
             <p>
               <strong>
                 To use innovation and my future J.D. to champion inclusion, protect rights, and
@@ -144,8 +148,10 @@ const About = () => {
             </p>
 
             <p>
-              Currently, I’m pursuing opportunities to bridge <strong>technology</strong>,{' '}
-              <strong>consulting</strong>, and <strong>law</strong> driven by a belief that
+              Currently, I am an <strong>incoming Data Analyst at ZURU</strong>, where I aim to
+              leverage analytics and strategic decision-making to drive innovation. Beyond this, I’m
+              continuously seeking opportunities to bridge <strong>technology</strong>,{' '}
+              <strong>consulting</strong>, and <strong>law</strong>, driven by a belief that
               solutions should amplify every voice. I thrive on crafting strategies that aren’t just
               effective—they’re transformative. Whether it’s designing equitable tech solutions or
               leading creative projects, my work is fueled by a blend of creativity, analytical
@@ -153,11 +159,12 @@ const About = () => {
             </p>
 
             <p>
-              From tech externships to storytelling initiatives, my experience spans fields where
-              innovation meets advocacy. As a mentor and advocate, I draw on my own journey to guide
-              others and create spaces where diverse perspectives drive change. For me, every
-              challenge is an opportunity to empower, inspire, and build a future that leaves no one
-              behind.
+              From tech externships to advocacy initiatives, my experience spans fields where
+              design, data, and law intersect to shape more equitable systems. As a mentor and
+              advocate, I use my own experiences to uplift others, foster community, and create
+              spaces where diverse perspectives drive change. For me, every challenge is an
+              opportunity to bridge gaps, build possibilities, and shape a future where innovation
+              and justice go hand in hand.
             </p>
           </div>
         </StyledText>
