@@ -1,5 +1,5 @@
 ---
-date: '2024-0-21'
+date: '2024-04-21'
 title: 'Blog Intern'
 company: 'DataRes | UCLA'
 location: 'Los Angeles, CA'
