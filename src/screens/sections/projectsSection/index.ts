@@ -1,1 +1,1 @@
-export { ProjectsSection } from "./ProjectsSection";
+import { ProjectsSection } from "./projectsSection";
