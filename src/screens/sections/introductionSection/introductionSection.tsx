@@ -1,46 +1,18 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { Badge } from "../../../components/ui/badge";
 import pixelFigure from "../../../assets/pixel-figure.png";
 
 const orbitLabels = [
-  "Data Scientist",
-  "Analytics Engineer",
-  "Business Operations Analyst",
-  "Product Strategy",
-  "Technology Consultant",
-];
-const ORBIT_ROTATION_MS = 8000;
+  "Data Analyst & Product Strategy"]
+  
+const ORBIT_ROTATION_MS = 10000;
 const CHAR_SPACING_DEG = 4;
 const ORBIT_RADIUS_PX = 150;
-const WALL_ANGLE_DEG = 225;
-const WALL_WIDTH_DEG = 2;
-const ROTATION_DIRECTION = "clockwise";
 
 export const IntroductionSection = (): JSX.Element => {
   const [baseAngle, setBaseAngle] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const angleRef = useRef(0);
   const lastTimeRef = useRef<number | null>(null);
-
-  const normalizeAngle = (angle: number) => (angle % 360 + 360) % 360;
-  const angleDistance = (from: number, to: number) => {
-    const diff = normalizeAngle(to - from);
-    return diff > 180 ? diff - 360 : diff;
-  };
-  const anglePassedWall = (
-    angle: number,
-    wallAngle: number,
-    direction: "clockwise" | "counterclockwise",
-  ) => {
-    const theta = normalizeAngle(angle);
-    const wall = normalizeAngle(wallAngle);
-    const delta = angleDistance(wall, theta);
-    if (direction === "clockwise") {
-      return delta > 0;
-    }
-    return delta < 0;
-  };
-  const wallEndAngle = normalizeAngle(WALL_ANGLE_DEG + WALL_WIDTH_DEG);
 
   useEffect(() => {
     let rafId = 0;
@@ -68,31 +40,17 @@ export const IntroductionSection = (): JSX.Element => {
     };
   }, []);
 
-  const currentLabel = orbitLabels[currentIndex];
-  const nextLabel = orbitLabels[(currentIndex + 1) % orbitLabels.length];
-  // Count per-character crossings to drive the LED edge and progressive reveal.
-  const currentHiddenCount = currentLabel.split("").reduce((count, _, index) => {
-    const charAngle = baseAngle - index * CHAR_SPACING_DEG;
-    return count + (anglePassedWall(charAngle, WALL_ANGLE_DEG, ROTATION_DIRECTION) ? 1 : 0);
-  }, 0);
-  const nextVisibleCount = nextLabel.split("").reduce((count, _, index) => {
-    const charAngle = baseAngle + WALL_WIDTH_DEG - index * CHAR_SPACING_DEG;
-    const isPast = anglePassedWall(charAngle, wallEndAngle, ROTATION_DIRECTION);
-    const isRevealed = index < currentHiddenCount;
-    return count + (isPast && isRevealed ? 1 : 0);
-  }, 0);
-
   useEffect(() => {
-    if (
-      currentHiddenCount >= currentLabel.length &&
-      nextVisibleCount >= nextLabel.length
-    ) {
-      angleRef.current = wallEndAngle;
-      setBaseAngle(wallEndAngle);
-      lastTimeRef.current = null;
+    const intervalId = window.setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % orbitLabels.length);
-    }
-  }, [currentHiddenCount, currentLabel.length, nextLabel.length, nextVisibleCount, wallEndAngle]);
+    }, ORBIT_ROTATION_MS);
+
+    return () => {
+      window.clearInterval(intervalId);
+    };
+  }, []);
+
+  const currentLabel = orbitLabels[currentIndex];
 
   return (
     <section id="home" className="layout-intro-section">
@@ -134,11 +92,12 @@ export const IntroductionSection = (): JSX.Element => {
             </div>
 
             <div className="text-intro-line text-intro-line-delay-800">
-              <Badge className="btn-intro-badge">
+              <div className="btn-intro-badge">
+                <span className="intro-badge-dot" />
                 <span className="text-intro-badge">
                   Open to Opportunities
                 </span>
-              </Badge>
+              </div>
             </div>
           </div>
 
@@ -160,42 +119,13 @@ export const IntroductionSection = (): JSX.Element => {
                     {/* Current label fades out per character at the wall. */}
                     {currentLabel.split("").map((char, index) => {
                       const charAngle = baseAngle - index * CHAR_SPACING_DEG;
-                      const visible = !anglePassedWall(
-                        charAngle,
-                        WALL_ANGLE_DEG,
-                        ROTATION_DIRECTION,
-                      );
                       const displayChar = char === " " ? "\u00A0" : char;
                       return (
                         <span
                           key={`current-${currentIndex}-${index}`}
                           className="text-earth-orbit-char"
                           style={{
-                            opacity: visible ? 1 : 0,
-                            transform: `rotate(${charAngle}deg) translateX(${ORBIT_RADIUS_PX}px) rotate(-90deg)`,
-                          }}
-                        >
-                          {displayChar}
-                        </span>
-                      );
-                    })}
-                    {/* Next label reveals per character from the wall edge. */}
-                    {nextLabel.split("").map((char, index) => {
-                      const charAngle = baseAngle + WALL_WIDTH_DEG - index * CHAR_SPACING_DEG;
-                      const isPast = anglePassedWall(
-                        charAngle,
-                        wallEndAngle,
-                        ROTATION_DIRECTION,
-                      );
-                      const isRevealed = index < currentHiddenCount;
-                      const visible = isPast && isRevealed;
-                      const displayChar = char === " " ? "\u00A0" : char;
-                      return (
-                        <span
-                          key={`next-${currentIndex}-${index}`}
-                          className="text-earth-orbit-char"
-                          style={{
-                            opacity: visible ? 1 : 0,
+                            opacity: 1,
                             transform: `rotate(${charAngle}deg) translateX(${ORBIT_RADIUS_PX}px) rotate(-90deg)`,
                           }}
                         >

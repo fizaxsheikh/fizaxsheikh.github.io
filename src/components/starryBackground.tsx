@@ -22,7 +22,7 @@ export const StarryBackground = (): JSX.Element => {
 
   useEffect(() => {
     // Generate twinkling stars
-    const generatedStars: Star[] = Array.from({ length: 100 }, (_, i) => ({
+    const generatedStars: Star[] = Array.from({ length: 60 }, (_, i) => ({
       id: i,
       left: `${Math.random() * 100}%`,
       top: `${Math.random() * 100}%`,
@@ -49,9 +49,11 @@ export const StarryBackground = (): JSX.Element => {
           prev.filter((star) => star.id !== newShootingStar.id)
         );
       }, 3000);
-    }, 5000); // New shooting star every 5 seconds
+    }, 8000); // New shooting star every 8 seconds
 
-    return () => clearInterval(shootingStarInterval);
+    return () => {
+      clearInterval(shootingStarInterval);
+    };
   }, []);
 
   return (

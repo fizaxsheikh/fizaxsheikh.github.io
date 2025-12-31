@@ -15,6 +15,7 @@ const navigationItems = [
 ];
 
 export const Desktop = (): JSX.Element => {
+  const [isLoading, setIsLoading] = useState(true);
   const [activeSection, setActiveSection] = useState("home");
   const [activeBubbleStyle, setActiveBubbleStyle] = useState({ left: 0, width: 0 });
   const [isScrolled, setIsScrolled] = useState(false);
@@ -34,6 +35,20 @@ export const Desktop = (): JSX.Element => {
       });
     }
   };
+
+  React.useEffect(() => {
+    const handleLoad = () => setIsLoading(false);
+    if (document.readyState === "complete") {
+      handleLoad();
+    } else {
+      window.addEventListener("load", handleLoad);
+    }
+    const fallback = window.setTimeout(handleLoad, 1200);
+    return () => {
+      window.removeEventListener("load", handleLoad);
+      window.clearTimeout(fallback);
+    };
+  }, []);
 
   React.useEffect(() => {
     const updateBubblePosition = () => {
@@ -128,6 +143,13 @@ export const Desktop = (): JSX.Element => {
   }, []);
   return (
     <div className="layout-root" data-model-id="202:2">
+      {isLoading && (
+        <div className="layout-loader" aria-hidden="true">
+          <div className="layout-loader-glow" />
+          <div className="layout-loader-ring" />
+          <div className="layout-loader-dot" />
+        </div>
+      )}
       <StarryBackground />
       <header
         className={`layout-header ${
@@ -185,7 +207,7 @@ export const Desktop = (): JSX.Element => {
 
           <Button 
             onClick={() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" })}
-            className="btn-contact">
+            className="btn-contact !bg-white !text-black !shadow-none hover:!bg-white !rounded-[50px] !px-5 !py-3.5">
             <span className="text-btn-contact">
               CONTACT
             </span>

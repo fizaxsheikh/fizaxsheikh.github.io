@@ -23,7 +23,7 @@ export const ContactSection = (): JSX.Element => {
           </div>
 
           <h3 className="text-contact-eyebrow">
-            What&apos;s Next?
+            The Next Move
           </h3>
 
           <h2 className="text-contact-title">
@@ -34,7 +34,7 @@ export const ContactSection = (): JSX.Element => {
             I&apos;m always on the lookout for exciting new opportunities and
             love connecting with like-minded people. Whether you&apos;ve got a
             question, a cool idea to share, or just want to say hi, don&apos;t
-            hesitate to reach out—I&apos;d love to hear from you!
+            hesitate to reach out. I&apos;d love to hear from you!
           </p>
           </div>
         </div>
