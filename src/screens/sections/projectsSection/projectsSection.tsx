@@ -1,7 +1,5 @@
 import React, { useMemo, useState } from "react";
 import researchPdf from "../../../assets/annotated-BLS_Final_Paper.pdf";
-import sanctuarySlides from "../../../assets/sanctuary demo day slides.png";
-import civixSlides from "../../../assets/ACM-W_ Pitch.png";
 
 type ProjectCategory = "product" | "ops" | "analytics" | "engineering" | "research";
 
@@ -74,21 +72,21 @@ const projects: Project[] = [
     links: {},
   },
   {
-    id: "ponytail-oscillation",
-    title: "The Physics of Ponytail Oscillation",
+    id: "modeling-risk-asymmetric-cost",
+    title: "Stability in Periodically Forced Motion",
     category: "analytics",
     problem:
-      "Problem: The biomechanical impact of hair motion during running was poorly understood and under-modeled.",
+      "Problem: Periodic head motion can cause a ponytail to transition from stable sway to unstable oscillation, but the conditions under which this happens are not obvious.",
     role:
-      "My role: Built and analyzed a mathematical model of oscillatory motion in biomechanics.",
+      "My role: Analyzed and explained a physical model of ponytail motion to understand stability under periodic forcing.",
     bullets: [
-      "Modeled ponytail motion using harmonic motion equations.",
-      "Simulated dynamic behavior under varying running conditions.",
-      "Analyzed ergonomic implications at the intersection of physics and biomechanics.",
+      "Compared simplified pendulum and flexible-string models to isolate key assumptions.",
+      "Reasoned about stability vs instability using small-oscillation and resonance logic.",
+      "Connected theoretical results to real-world cadence ranges.",
     ],
     outcome:
-      "Outcome: Demonstrated how physical modeling can inform comfort, performance, and ergonomic design.",
-    stack: ["Python", "ANSYS", "Wolfram Mathematica", "MATLAB", "SolidWorks"],
+      "Outcome: Clear intuition for when oscillatory motion becomes unstable and why.",
+    stack: ["Python", "Random Forest", "Logistic Regression", "LDA/QDA", "Lasso", "Ridge"],
     links: {},
   },
   {
@@ -264,7 +262,11 @@ export const ProjectsSection = (): JSX.Element => {
             </div>
           </div>
 
-          <div className="layout-projects-visual">
+          <div
+            className={`layout-projects-visual ${
+              activeProject.id === "zuru-ops-analytics" ? "layout-projects-visual-stack" : ""
+            }`}
+          >
             {activeProject.category === "research" ? (
               <div className="layout-projects-pdf-shell">
                 <embed
@@ -274,65 +276,183 @@ export const ProjectsSection = (): JSX.Element => {
                 />
               </div>
             ) : activeProject.id === "sanctuary" ? (
-              <div className="layout-projects-image-wrap">
-                <img
-                  className="layout-projects-image"
-                  alt="Sanctuary demo day slides"
-                  src={sanctuarySlides}
+              <div className="layout-projects-embed-wrap">
+                <iframe
+                  className="layout-projects-embed"
+                  src="https://www.canva.com/design/DAGhNHvwWk0/zlaMye7faAzBHUHrVijd4g/view?embed"
+                  title="Sanctuary demo day slides"
+                  loading="lazy"
+                  allowFullScreen
                 />
               </div>
             ) : activeProject.id === "zuru-ops-analytics" ? (
-              <div className="layout-projects-exhibit">
-                <div className="layout-projects-exhibit-glow" />
-                <div className="layout-projects-decision-diagram">
-                  <div className="layout-projects-lanes">
-                    <div className="layout-projects-lane">
-                      <span className="layout-projects-lane-label">Before</span>
-                      <div className="layout-projects-lane-track layout-projects-lane-track-before">
-                        <div className="layout-projects-lane-node">Production Reality</div>
-                        <span className="layout-projects-lane-connector" />
-                        <div className="layout-projects-lane-node">Manual Rollups</div>
-                        <span className="layout-projects-lane-connector" />
-                        <div className="layout-projects-lane-node">Reconciliation</div>
-                        <span className="layout-projects-lane-connector" />
-                        <div className="layout-projects-lane-node">Decision</div>
+              <div className="layout-projects-stack">
+                <div className="layout-projects-embed-wrap">
+                  <div className="layout-projects-embed-caption">Sample slide deck</div>
+                  <iframe
+                    className="layout-projects-embed"
+                    src="https://www.canva.com/design/DAGeGm67Sls/_eGkhMEbvixNRZZfG3oK9g/view?embed"
+                    title="ZURU Ops Analytics slides"
+                    loading="lazy"
+                    allowFullScreen
+                  />
+                </div>
+                <div className="layout-projects-exhibit" aria-hidden="true">
+                  <div className="layout-projects-exhibit-glow" />
+                  <div className="layout-projects-decision-diagram">
+                    <div className="layout-projects-lanes">
+                      <div className="layout-projects-lane">
+                        <span className="layout-projects-lane-label">Before</span>
+                        <div className="layout-projects-lane-track layout-projects-lane-track-before">
+                          <div className="layout-projects-lane-node">Production Reality</div>
+                          <span className="layout-projects-lane-connector" />
+                          <div className="layout-projects-lane-node">Manual Rollups</div>
+                          <span className="layout-projects-lane-connector" />
+                          <div className="layout-projects-lane-node">Reconciliation</div>
+                          <span className="layout-projects-lane-connector" />
+                          <div className="layout-projects-lane-node">Decision</div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="layout-projects-lane layout-projects-lane-after">
-                      <span className="layout-projects-lane-label">After</span>
-                      <div className="layout-projects-lane-track">
-                        <div className="layout-projects-lane-node layout-projects-lane-node-after">Signals</div>
-                        <span className="layout-projects-lane-connector layout-projects-lane-connector-after" />
-                        <div className="layout-projects-lane-node layout-projects-lane-node-after">Validation</div>
-                        <span className="layout-projects-lane-connector layout-projects-lane-connector-after" />
-                        <div className="layout-projects-lane-node layout-projects-lane-node-after">Scenarios</div>
-                        <span className="layout-projects-lane-connector layout-projects-lane-connector-after" />
-                        <div className="layout-projects-lane-node layout-projects-lane-node-after layout-projects-lane-node-active">
-                          Decision
+                      <div className="layout-projects-lane layout-projects-lane-after">
+                        <span className="layout-projects-lane-label">After</span>
+                        <div className="layout-projects-lane-track">
+                          <div className="layout-projects-lane-node layout-projects-lane-node-after">Signals</div>
+                          <span className="layout-projects-lane-connector layout-projects-lane-connector-after" />
+                          <div className="layout-projects-lane-node layout-projects-lane-node-after">Validation</div>
+                          <span className="layout-projects-lane-connector layout-projects-lane-connector-after" />
+                          <div className="layout-projects-lane-node layout-projects-lane-node-after">Scenarios</div>
+                          <span className="layout-projects-lane-connector layout-projects-lane-connector-after" />
+                          <div className="layout-projects-lane-node layout-projects-lane-node-after layout-projects-lane-node-active">
+                            Decision
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="layout-projects-time-scale">
-                    <span>weeks</span>
-                    <span>→</span>
-                    <span>days</span>
-                    <span>→</span>
-                    <span>hours</span>
-                  </div>
-                  <div className="layout-projects-diagram-caption">
-                    <p>High-level representation. Visualized for confidentiality.</p>
-                    <p>Designed to reduce decision latency under uncertainty.</p>
+                    <div className="layout-projects-time-scale">
+                      <span>weeks</span>
+                      <span>→</span>
+                      <span>days</span>
+                      <span>→</span>
+                      <span>hours</span>
+                    </div>
+                    <div className="layout-projects-diagram-caption">
+                      <p>High-level representation. Visualized for confidentiality.</p>
+                      <p>Designed to reduce decision latency under uncertainty.</p>
+                    </div>
                   </div>
                 </div>
               </div>
             ) : activeProject.id === "civix" ? (
-              <div className="layout-projects-image-wrap">
-                <img
-                  className="layout-projects-image"
-                  alt="CIVIX pitch slides"
-                  src={civixSlides}
+              <div className="layout-projects-embed-wrap">
+                <iframe
+                  className="layout-projects-embed"
+                  src="https://docs.google.com/presentation/d/1YZ_Sme6DkJzkgy_VN2pPZ4i2a0ujMFbeMplXyFV7_vQ/embed?start=false&loop=false&delayms=3000"
+                  title="CIVIX pitch slides"
+                  loading="lazy"
+                  allowFullScreen
                 />
+              </div>
+            ) : activeProject.id === "modeling-risk-asymmetric-cost" ? (
+              <div
+                className="layout-projects-stability"
+                role="img"
+                aria-label="Conceptual stability diagram showing stable, transition, and unstable regimes under periodic forcing."
+              >
+                <div className="layout-projects-stability-zones" aria-hidden="true">
+                  <div className="layout-projects-stability-zone layout-projects-stability-zone-stable" />
+                  <div className="layout-projects-stability-zone layout-projects-stability-zone-transition" />
+                  <div className="layout-projects-stability-zone layout-projects-stability-zone-unstable" />
+                </div>
+                <div className="layout-projects-stability-dividers" aria-hidden="true">
+                  <span className="layout-projects-stability-divider layout-projects-stability-divider-left" />
+                  <span className="layout-projects-stability-divider layout-projects-stability-divider-right" />
+                </div>
+                <div className="layout-projects-stability-guides" aria-hidden="true">
+                  <svg viewBox="0 0 400 220" preserveAspectRatio="none">
+                    <defs>
+                      <pattern id="dot-grid" width="16" height="16" patternUnits="userSpaceOnUse">
+                        <circle cx="1" cy="1" r="1" fill="rgba(255,255,255,0.12)" />
+                      </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#dot-grid)" />
+                  </svg>
+                </div>
+                <div className="layout-projects-stability-vignette" aria-hidden="true" />
+                <div className="layout-projects-stability-wave" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 800 200"
+                    preserveAspectRatio="none"
+                    className="layout-projects-stability-wave-svg"
+                  >
+                    <path
+                      d="M0 110 C 80 105, 160 115, 240 110 C 320 90, 400 130, 480 110 C 560 70, 640 150, 720 110 C 760 80, 800 140, 800 140"
+                      fill="none"
+                      stroke="rgba(255,255,255,0.36)"
+                      strokeWidth="1.6"
+                    />
+                  </svg>
+                </div>
+                <div className="layout-projects-stability-amplitude" aria-hidden="true">
+                  <svg viewBox="0 0 400 220" preserveAspectRatio="none">
+                    <g stroke="rgba(255,255,255,0.25)" strokeWidth="1">
+                      <path d="M80 90 L90 90 M85 90 L85 110" />
+                      <path d="M190 80 L200 80 M195 80 L195 120" />
+                      <path d="M300 65 L310 65 M305 65 L305 135" />
+                    </g>
+                  </svg>
+                </div>
+                <div className="layout-projects-stability-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 400 220" preserveAspectRatio="none">
+                    <defs>
+                      <marker
+                        id="stability-arrowhead"
+                        markerWidth="6"
+                        markerHeight="6"
+                        refX="5"
+                        refY="3"
+                        orient="auto"
+                      >
+                        <path d="M0,0 L6,3 L0,6 Z" fill="rgba(255,255,255,0.35)" />
+                      </marker>
+                    </defs>
+                    <path
+                      d="M70 140 C 150 120, 230 110, 330 100"
+                      fill="none"
+                      stroke="rgba(255,255,255,0.45)"
+                      strokeWidth="1.2"
+                      markerEnd="url(#stability-arrowhead)"
+                    />
+                  </svg>
+                </div>
+                <div className="layout-projects-stability-center" aria-hidden="true">
+                  <div className="layout-projects-stability-oscillator">
+                    <span className="layout-projects-stability-pivot" />
+                    <span className="layout-projects-stability-string" />
+                    <span className="layout-projects-stability-bob" />
+                  </div>
+                  <div className="layout-projects-stability-arc" />
+                </div>
+                <div className="layout-projects-stability-zone-label layout-projects-stability-zone-label-stable">
+                  Stable
+                </div>
+                <div className="layout-projects-stability-zone-label layout-projects-stability-zone-label-transition">
+                  Transition
+                </div>
+                <div className="layout-projects-stability-zone-label layout-projects-stability-zone-label-unstable">
+                  Unstable
+                </div>
+                <div className="layout-projects-stability-callout layout-projects-stability-callout-stable">
+                  low sway
+                </div>
+                <div className="layout-projects-stability-callout layout-projects-stability-callout-transition">
+                  resonance
+                </div>
+                <div className="layout-projects-stability-callout layout-projects-stability-callout-unstable">
+                  amplified
+                </div>
+                <div className="layout-projects-stability-caption">
+                  Conceptual visualization of stability under periodic forcing.
+                </div>
               </div>
             ) : (
               <>

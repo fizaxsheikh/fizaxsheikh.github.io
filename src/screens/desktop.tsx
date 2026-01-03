@@ -37,15 +37,36 @@ export const Desktop = (): JSX.Element => {
   };
 
   React.useEffect(() => {
-    const handleLoad = () => setIsLoading(false);
+    const minimumDurationMs = 2000;
+    let hasLoaded = false;
+    let minElapsed = false;
+
+    const maybeFinish = () => {
+      if (hasLoaded && minElapsed) {
+        setIsLoading(false);
+      }
+    };
+
+    const handleLoad = () => {
+      hasLoaded = true;
+      maybeFinish();
+    };
+
     if (document.readyState === "complete") {
       handleLoad();
     } else {
       window.addEventListener("load", handleLoad);
     }
-    const fallback = window.setTimeout(handleLoad, 1200);
+
+    const minTimer = window.setTimeout(() => {
+      minElapsed = true;
+      maybeFinish();
+    }, minimumDurationMs);
+
+    const fallback = window.setTimeout(handleLoad, minimumDurationMs);
     return () => {
       window.removeEventListener("load", handleLoad);
+      window.clearTimeout(minTimer);
       window.clearTimeout(fallback);
     };
   }, []);
@@ -146,8 +167,10 @@ export const Desktop = (): JSX.Element => {
       {isLoading && (
         <div className="layout-loader" aria-hidden="true">
           <div className="layout-loader-glow" />
-          <div className="layout-loader-ring" />
-          <div className="layout-loader-dot" />
+          <div className="layout-loader-orbit">
+            <div className="layout-loader-ring" />
+            <div className="layout-loader-dot" />
+          </div>
         </div>
       )}
       <StarryBackground />
