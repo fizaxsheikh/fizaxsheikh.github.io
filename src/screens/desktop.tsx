@@ -19,6 +19,7 @@ export const Desktop = (): JSX.Element => {
   const [activeSection, setActiveSection] = useState("home");
   const [activeBubbleStyle, setActiveBubbleStyle] = useState({ left: 0, width: 0 });
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigationRef = React.useRef<HTMLDivElement>(null);
 
   const scrollToSection = (sectionId: string) => {
@@ -34,6 +35,7 @@ export const Desktop = (): JSX.Element => {
         behavior: "smooth",
       });
     }
+    setIsMobileMenuOpen(false);
   };
 
   React.useEffect(() => {
@@ -228,6 +230,19 @@ export const Desktop = (): JSX.Element => {
             ))}
           </nav>
 
+          <button
+            type="button"
+            className="nav-toggle"
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
+            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+          >
+            <span className="nav-toggle-label">
+              {isMobileMenuOpen ? "Close" : "Menu"}
+            </span>
+            <span className={`nav-toggle-icon ${isMobileMenuOpen ? "nav-toggle-icon-open" : ""}`} />
+          </button>
+
           <Button 
             onClick={() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" })}
             className="btn-contact !bg-white !text-black !shadow-none hover:!bg-white !rounded-[50px] !px-5 !py-3.5">
@@ -235,6 +250,22 @@ export const Desktop = (): JSX.Element => {
               CONTACT
             </span>
           </Button>
+          </div>
+
+          <div
+            id="mobile-menu"
+            className={`nav-mobile-panel ${isMobileMenuOpen ? "nav-mobile-panel-open" : ""}`}
+          >
+            {navigationItems.map((item) => (
+              <button
+                key={item.section}
+                type="button"
+                className={`nav-mobile-link ${activeSection === item.section ? "nav-mobile-link-active" : ""}`}
+                onClick={() => scrollToSection(item.section)}
+              >
+                {item.label}
+              </button>
+            ))}
           </div>
         </div>
       </header>

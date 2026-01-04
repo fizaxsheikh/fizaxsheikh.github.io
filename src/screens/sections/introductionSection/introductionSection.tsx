@@ -6,7 +6,7 @@ const orbitLabels = [
   
 const ORBIT_ROTATION_MS = 10000;
 const CHAR_SPACING_DEG = 4;
-const ORBIT_RADIUS_PX = 150;
+const ORBIT_RADIUS = "var(--orbit-radius, 150px)";
 
 export const IntroductionSection = (): JSX.Element => {
   const [baseAngle, setBaseAngle] = useState(0);
@@ -126,7 +126,7 @@ export const IntroductionSection = (): JSX.Element => {
                           className="text-earth-orbit-char"
                           style={{
                             opacity: 1,
-                            transform: `rotate(${charAngle}deg) translateX(${ORBIT_RADIUS_PX}px) rotate(-90deg)`,
+                            transform: `rotate(${charAngle}deg) translateX(${ORBIT_RADIUS}) rotate(-90deg)`,
                           }}
                         >
                           {displayChar}

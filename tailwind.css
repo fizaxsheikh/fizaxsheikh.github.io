@@ -7,7 +7,7 @@
   }
 
   .layout-root {
-    @apply bg-[#0b1121] overflow-x-hidden overflow-y-visible w-full min-w-[1440px] relative;
+    @apply bg-[#0b1121] overflow-x-hidden overflow-y-visible w-full min-w-0 relative min-h-screen;
   }
 
   .layout-header {
@@ -56,6 +56,58 @@
 
   .nav-button {
     @apply inline-flex items-center justify-center gap-2.5 px-5 py-3.5 relative flex-[0_0_auto] rounded-[50px] h-auto bg-transparent hover:bg-white/10 z-10;
+  }
+
+  .nav-toggle {
+    @apply hidden items-center gap-2 px-4 py-2 rounded-[999px] border border-white/15 bg-white/5 text-white text-sm font-medium;
+  }
+
+  .nav-toggle-label {
+    @apply uppercase tracking-[0.18em] text-[11px];
+  }
+
+  .nav-toggle-icon {
+    @apply relative w-5 h-5;
+  }
+
+  .nav-toggle-icon::before,
+  .nav-toggle-icon::after {
+    content: "";
+    @apply absolute left-1/2 w-3.5 h-0.5 bg-white rounded-full transition-transform duration-200 ease-out;
+    transform: translateX(-50%);
+  }
+
+  .nav-toggle-icon::before {
+    top: 6px;
+  }
+
+  .nav-toggle-icon::after {
+    top: 12px;
+  }
+
+  .nav-toggle-icon-open::before {
+    transform: translateX(-50%) translateY(3px) rotate(45deg);
+  }
+
+  .nav-toggle-icon-open::after {
+    transform: translateX(-50%) translateY(-3px) rotate(-45deg);
+  }
+
+  .nav-mobile-panel {
+    @apply hidden mt-3 w-full rounded-[22px] border border-white/10 bg-[#0f0f16]/90 backdrop-blur-md p-3;
+  }
+
+  .nav-mobile-panel-open {
+    @apply flex flex-col gap-2;
+  }
+
+  .nav-mobile-link {
+    @apply w-full text-left text-sm px-4 py-3 rounded-[16px] text-white/80 border border-white/10 transition-colors duration-200;
+  }
+
+  .nav-mobile-link-active {
+    @apply text-white bg-white/10 border-white/30;
+    box-shadow: 0 0 12px rgba(255, 95, 176, 0.18);
   }
 
   .text-nav {
@@ -109,6 +161,7 @@
 
   .layout-intro-section {
     @apply relative w-full min-h-screen px-4 flex items-center scroll-mt-[120px] -mt-6;
+    --orbit-radius: 150px;
   }
 
   .layout-intro-background {
@@ -1304,6 +1357,297 @@
     @apply absolute w-1 h-1 bg-white rounded-full shadow-[0_0_10px_3px_rgba(255,255,255,0.8)] motion-shooting-star;
   }
 
+  @media (max-width: 1024px) {
+    .layout-header-inner {
+      top: 2.5rem;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .layout-header-row {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .layout-brand,
+    .nav-bar,
+    .btn-contact {
+      transform: none;
+    }
+
+    .nav-bar {
+      display: none;
+    }
+
+    .nav-toggle {
+      display: inline-flex;
+    }
+
+    .nav-mobile-panel {
+      display: none;
+    }
+
+    .nav-mobile-panel-open {
+      display: flex;
+    }
+
+    .layout-intro-section {
+      padding-top: 6.5rem;
+      padding-bottom: 4rem;
+      margin-top: 0;
+      --orbit-radius: 130px;
+    }
+
+    .layout-intro-copy {
+      text-align: center;
+    }
+
+    .text-intro-line-tight {
+      margin-top: -0.5rem;
+    }
+
+    .layout-intro-media {
+      margin-top: 2rem;
+      transform: none;
+    }
+
+    .layout-earth-wrapper {
+      height: 260px;
+      width: 260px;
+    }
+
+    .layout-earth-orbit-ring,
+    .layout-earth-orbit-chars {
+      height: 280px;
+      width: 280px;
+    }
+
+    .layout-earth-image {
+      width: 200px;
+      height: 200px;
+    }
+
+    .layout-earth-figure {
+      width: 56px;
+      height: 90px;
+    }
+
+    .layout-about-section {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+      transform: none;
+      min-height: auto;
+    }
+
+    .layout-about-container {
+      gap: 3rem;
+    }
+
+    .layout-about-left {
+      min-height: auto;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .layout-about-portrait-wrap {
+      position: relative;
+      left: auto;
+      right: auto;
+      top: auto;
+      transform: none;
+      margin-top: 1.5rem;
+    }
+
+    .layout-about-image {
+      width: min(100%, 380px);
+      height: auto;
+      max-width: 100%;
+      transform: none;
+    }
+
+    .layout-experience-section,
+    .layout-projects-section {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    .layout-experience-row,
+    .layout-projects-main {
+      gap: 2.5rem;
+    }
+
+    .layout-experience-browser {
+      border-radius: 16px;
+    }
+
+    .layout-experience-tab {
+      width: auto;
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+      white-space: nowrap;
+    }
+
+    .layout-experience-browser-body {
+      padding: 1rem;
+    }
+
+    .text-experience-title {
+      font-size: 1.375rem;
+      line-height: 1.4;
+    }
+
+    .layout-experience-image {
+      max-width: 420px;
+    }
+
+    .layout-projects-tabs {
+      max-height: 240px;
+      overflow-y: auto;
+    }
+
+    .layout-projects-actions {
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .layout-projects-visual {
+      min-height: 280px;
+      max-height: 70vh;
+    }
+
+    .layout-projects-lane-track {
+      flex-wrap: wrap;
+      row-gap: 0.5rem;
+      padding: 0 1rem;
+    }
+
+    .layout-projects-lane-connector {
+      display: none;
+    }
+
+    .layout-contact-section {
+      padding-top: 4rem;
+    }
+
+    .text-contact-title {
+      white-space: normal;
+      text-align: center;
+    }
+
+    .layout-footer-surface {
+      border-top-left-radius: 48px;
+      border-top-right-radius: 48px;
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+
+    .layout-footer-row {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .text-footer-copy {
+      white-space: normal;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .layout-header-inner {
+      top: 2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .layout-brand-logo {
+      width: 28px;
+      height: 28px;
+    }
+
+    .text-brand {
+      font-size: 1rem;
+    }
+
+    .btn-contact {
+      padding: 0.55rem 1rem;
+    }
+
+    .layout-header-gradient {
+      height: 96px;
+    }
+
+    .layout-intro-section {
+      padding-top: 6rem;
+      padding-bottom: 3.5rem;
+      --orbit-radius: 110px;
+    }
+
+    .layout-intro-background-image,
+    .layout-about-background-image,
+    .layout-experience-background-image,
+    .layout-projects-background-image {
+      background-size: 1100px auto;
+    }
+
+    .layout-earth-wrapper {
+      height: 220px;
+      width: 220px;
+    }
+
+    .layout-earth-orbit-ring,
+    .layout-earth-orbit-chars {
+      height: 240px;
+      width: 240px;
+    }
+
+    .layout-earth-image {
+      width: 170px;
+      height: 170px;
+    }
+
+    .layout-earth-figure {
+      width: 48px;
+      height: 78px;
+      transform: rotate(225deg) translateX(92px) rotate(-225deg) translate(10px, -10px);
+    }
+
+    .layout-projects-visual {
+      min-height: 240px;
+      max-height: 60vh;
+    }
+
+    .layout-experience-image {
+      max-width: 320px;
+    }
+
+    .layout-projects-stack {
+      grid-template-rows: minmax(180px, 1fr) minmax(180px, 1fr);
+    }
+
+    .layout-projects-embed-wrap {
+      min-height: 180px;
+    }
+
+    .layout-projects-exhibit {
+      padding: 1.5rem;
+    }
+
+    .layout-projects-stability {
+      padding: 1.5rem;
+    }
+
+    .layout-footer-inner {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .layout-footer-icons-image {
+      width: 120px;
+      height: auto;
+    }
+  }
 }
 
 :root {
@@ -1337,6 +1681,36 @@
   --heading-h3-font-weight: 700;
   --heading-h3-letter-spacing: 0px;
   --heading-h3-line-height: 27.5px;
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --big-heading-font-size: 52px;
+    --big-heading-line-height: 1.05;
+    --heading-h1-font-size: 44px;
+    --heading-h1-line-height: 1.1;
+    --heading-h2-font-size: 32px;
+    --heading-h2-line-height: 1.15;
+    --heading-h3-font-size: 22px;
+    --heading-h3-line-height: 1.2;
+    --body-font-size: 16px;
+    --body-line-height: 1.6;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --big-heading-font-size: 40px;
+    --big-heading-line-height: 1.05;
+    --heading-h1-font-size: 34px;
+    --heading-h1-line-height: 1.15;
+    --heading-h2-font-size: 26px;
+    --heading-h2-line-height: 1.2;
+    --heading-h3-font-size: 20px;
+    --heading-h3-line-height: 1.25;
+    --body-font-size: 15px;
+    --body-line-height: 1.6;
+  }
 }
 
 :root {
