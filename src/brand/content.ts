@@ -47,26 +47,19 @@ export const cover = {
 
 export const ticker = ["Remember the name", "Model", "Creative", "Influencer"];
 
-// About: each phrase is drawn in a style that matches it (see ABOUT_STYLES in BrandSite.tsx).
+// About: an editorial profile in Fiza's voice. DRAFT copy, pending Fiza's approval.
 export const about = {
-  intro: "Hi, I'm Fiza.",
-  lines: [
-    { text: "Signed model", style: "model" },
-    { text: "Creative", style: "creative" },
-    { text: "Downtown LA", style: "la" },
-    { text: "UCLA grad", style: "ucla" },
-    { text: "Financial analyst by day", style: "finance" },
-    { text: "Desi & dramatic", style: "desi" },
-    { text: "Gen-Z", style: "genz" },
-    { text: "Gym girl", style: "gym" },
-    { text: "Dog mom", style: "dog" },
-    { text: "Hoops", style: "hoops" },
-    { text: "Horror movies", style: "horror" },
-    { text: "R&B & dancing", style: "rnb" },
+  quote: "Discipline is my favorite accessory.",
+  paragraphs: [
+    "Hi, I'm Fiza, a signed model based in Downtown Los Angeles. I graduated from UCLA and work as a financial analyst by day, so I bring the same focus to set that I bring to a spreadsheet.",
+    "Fitness is the through-line. It keeps me grounded, and it shows in how I move in front of the camera. I'm building toward campaigns, editorial and fitness work, one frame at a time.",
   ],
-  niches: "Beauty & style · Lifestyle & wellness · Career",
-  outro: "Building the story you'll want to say you saw first.",
-  video: { src: onTheGo, poster: onTheGoPoster, caption: "On the go" },
+  credentials: [
+    { title: "Signed model", detail: "Represented by The Key Mgmt" },
+    { title: "UCLA alumna", detail: "Financial analyst by day" },
+    { title: "Fitness", detail: "Model · fitness · fashion" },
+  ],
+  video: { src: onTheGo, poster: onTheGoPoster, caption: "On the go, Los Angeles" },
 };
 
 // Digitals in the order agencies expect (headshots, mid, full length, profiles, back).

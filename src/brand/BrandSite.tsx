@@ -164,93 +164,60 @@ function Ticker() {
   );
 }
 
-// One look per phrase in the About collage. Keys match `style` in content.ts.
-const ABOUT_STYLES: Record<string, { className: string; style?: React.CSSProperties; before?: string; after?: string }> = {
-  model: { className: "font-serif-display text-5xl italic text-cobalt md:text-7xl" },
-  creative: { className: "text-5xl md:text-7xl", style: { fontFamily: "'Inter Tight', sans-serif", fontWeight: 900, letterSpacing: "-0.04em" } },
-  la: {
-    className: "rounded-lg border-[3px] border-white bg-[#00693e] px-4 pb-1 pt-2 text-2xl text-white shadow-[0_0_0_3px_#00693e,0_6px_14px_rgba(0,0,0,0.18)] md:text-4xl",
-    style: { fontFamily: "Overpass, sans-serif", fontWeight: 800, letterSpacing: "0.01em" },
-    before: "↑ ",
-  },
-  ucla: { className: "text-4xl text-[#2774AE] md:text-6xl", style: { fontFamily: "Graduate, serif", textShadow: "3px 3px 0 #FFD100" } },
-  finance: {
-    className: "rounded border border-[#0a8a4a]/40 bg-[#0a8a4a]/10 px-3 py-1 text-lg text-[#0a7a40] md:text-2xl",
-    style: { fontFamily: "'JetBrains Mono', monospace", fontWeight: 500 },
-    after: " ▲ 2.4%",
-  },
-  desi: {
-    className: "bg-gradient-to-r from-[#ff8a00] via-[#e5007d] to-[#7a1fa2] bg-clip-text pr-2 text-4xl text-transparent md:text-6xl",
-    style: { fontFamily: "'Playfair Display', serif", fontStyle: "italic", fontWeight: 900 },
-  },
-  genz: { className: "bg-black px-3 py-2 text-lg text-[#7CFF6B] md:text-2xl", style: { fontFamily: "'Press Start 2P', monospace" } },
-  gym: { className: "-skew-x-12 text-5xl uppercase tracking-tight md:text-7xl", style: { fontFamily: "Anton, sans-serif", textShadow: "3px 3px 0 #3346e8" } },
-  dog: { className: "text-5xl text-[#7a4a22] md:text-6xl", style: { fontFamily: "Caveat, cursive" }, after: " 🐾" },
-  hoops: { className: "text-4xl uppercase text-[#e8590c] md:text-6xl", style: { fontFamily: "Anton, sans-serif" }, before: "🏀 " },
-  horror: { className: "text-4xl text-[#b3001b] md:text-6xl", style: { fontFamily: "Creepster, cursive" } },
-  rnb: { className: "text-3xl text-[#e0457b] md:text-5xl", style: { fontFamily: "Pacifico, cursive" }, after: " ♫" },
-};
-
-const CREATIVE_COLORS = ["#3346e8", "#e0457b", "#121014", "#ff8a00", "#0a8a4a", "#7a1fa2", "#3346e8", "#e0457b"];
-
-function AboutPhrase({ text, look }: { text: string; look: string }) {
-  const s = ABOUT_STYLES[look];
-  if (look === "creative") {
-    // Every letter its own color and tilt
-    return (
-      <span className={`inline-flex ${s.className}`} aria-label={text}>
-        {text.split("").map((ch, i) => (
-          <span
-            key={i}
-            aria-hidden="true"
-            className="inline-block transition-transform duration-300 hover:-translate-y-2"
-            style={{ color: CREATIVE_COLORS[i % CREATIVE_COLORS.length], transform: `rotate(${i % 2 ? 6 : -6}deg)` }}
-          >
-            {ch}
-          </span>
-        ))}
-      </span>
-    );
-  }
-  return (
-    <span className={`inline-block transition-transform duration-300 hover:-rotate-2 hover:scale-105 ${s.className}`} style={s.style}>
-      {s.before}
-      {text}
-      {s.after}
-    </span>
-  );
-}
-
+// Editorial profile: pull quote + short first-person bio on the left, the film still on the right.
 function About() {
   return (
-    <section id="about" className="mx-auto grid max-w-7xl scroll-mt-20 gap-12 px-5 py-20 md:grid-cols-[1.25fr_1fr] md:gap-14 md:px-10 md:py-28">
-      <div>
-        <p className="font-mono-caps text-xs text-cobalt">About</p>
-        <Reveal>
-          <h2 className="font-serif-display mt-4 text-3xl md:text-4xl">{about.intro}</h2>
-        </Reveal>
-        <ul className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-5 md:gap-x-8 md:gap-y-6">
-          {about.lines.map((l, i) => (
-            <Reveal as="li" key={l.text} from="pop" delay={i * 70} className="leading-none">
-              <AboutPhrase text={l.text} look={l.style} />
-            </Reveal>
-          ))}
-        </ul>
-        <Reveal delay={300} className="mt-10 border-t border-black/15 pt-6">
-          <p className="font-mono-caps text-xs text-black/70">Content niches</p>
-          <p className="mt-2 text-lg font-medium">{about.niches}</p>
-          <p className="font-serif-display mt-8 text-2xl italic md:text-3xl">{about.outro}</p>
-        </Reveal>
+    <section id="about" className="mx-auto max-w-7xl scroll-mt-20 px-5 py-24 md:px-10 md:py-36">
+      <div className="font-mono-caps flex items-baseline justify-between border-b border-black/15 pb-4 text-xs">
+        <span className="text-cobalt">About</span>
+        <span className="text-black/60">Profile · Nº {issue.number}</span>
       </div>
-      <div className="w-full md:sticky md:top-28 md:self-start">
-        <Reveal from="curtain">
-          <div className="aspect-video">
-            <VideoTile src={about.video.src} poster={about.video.poster} title={about.video.caption}>
-              <span className="font-serif-display absolute bottom-4 left-4 text-3xl italic text-white drop-shadow">{about.video.caption}</span>
-            </VideoTile>
+
+      <div className="mt-14 grid gap-14 md:mt-20 md:grid-cols-12 md:gap-x-16">
+        <div className="md:col-span-5">
+          <Reveal>
+            <blockquote className="relative">
+              <p className="font-serif-display text-[2.6rem] italic leading-[1.04] tracking-[-0.01em] md:text-[3.6rem]">
+                <span className="text-cobalt">“</span>
+                {about.quote}
+                <span className="text-cobalt">”</span>
+              </p>
+              <footer className="font-mono-caps mt-6 text-xs text-black/60">— {profile.name}</footer>
+            </blockquote>
+          </Reveal>
+          <div className="mt-12 max-w-[34rem] space-y-5 text-[1.075rem] leading-[1.8] text-[color:var(--ink)]/85">
+            {about.paragraphs.map((para, i) => (
+              <Reveal key={i} delay={120 + i * 100}>
+                <p className={i === 0 ? "dropcap" : ""}>{para}</p>
+              </Reveal>
+            ))}
           </div>
-        </Reveal>
-        <WorkedWith />
+        </div>
+
+        <div className="md:col-span-7 md:pt-4">
+          <Reveal from="curtain">
+            <figure>
+              <div className="aspect-video overflow-hidden">
+                <VideoTile src={about.video.src} poster={about.video.poster} title={about.video.caption} />
+              </div>
+              <figcaption className="font-mono-caps mt-3 flex justify-between text-[11px] text-black/60">
+                <span>Fig. 01</span>
+                <span>{about.video.caption}</span>
+              </figcaption>
+            </figure>
+          </Reveal>
+
+          <dl className="mt-14 grid gap-8 sm:grid-cols-3 sm:gap-6">
+            {about.credentials.map((c, i) => (
+              <Reveal key={c.title} delay={i * 110} className="border-t border-black/80 pt-4">
+                <span className="font-mono-caps text-[11px] text-cobalt">{String(i + 1).padStart(2, "0")}</span>
+                <dt className="font-serif-display mt-2 text-2xl leading-tight">{c.title}</dt>
+                <dd className="mt-1.5 text-sm text-black/65">{c.detail}</dd>
+              </Reveal>
+            ))}
+          </dl>
+          <WorkedWith />
+        </div>
       </div>
     </section>
   );
@@ -258,9 +225,9 @@ function About() {
 
 function WorkedWith() {
   const openPhoto = useContext(LightboxContext);
-  const brand = "font-serif-display text-xl italic underline decoration-black/25 underline-offset-4 transition-colors hover:text-cobalt hover:decoration-[color:var(--cobalt)]";
+  const brand = "font-serif-display text-lg italic text-black/80 underline decoration-black/20 underline-offset-[5px] transition-colors hover:text-cobalt hover:decoration-[color:var(--cobalt)]";
   return (
-    <Reveal delay={200} className="mt-6 flex flex-wrap items-baseline gap-x-5 gap-y-2">
+    <Reveal delay={200} className="mt-10 flex flex-wrap items-baseline gap-x-5 gap-y-2 border-t border-black/15 pt-5">
       <span className="font-mono-caps text-xs text-black/70">Worked with</span>
       {workedWith.map((w) =>
         w.src ? (

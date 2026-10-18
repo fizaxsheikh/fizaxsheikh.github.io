@@ -145,3 +145,16 @@ body {
 }
 .cover-rise { animation: cover-rise 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s both; }
 @media (prefers-reduced-motion: reduce) { .cover-rise { animation: none; } }
+
+/* Editorial drop cap for the first About paragraph */
+.dropcap::first-letter {
+  font-family: "Bodoni Moda", Georgia, serif;
+  font-optical-sizing: auto;
+  float: left;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 4.2em;
+  line-height: 0.8;
+  padding: 0.04em 0.14em 0 0;
+  color: var(--cobalt);
+}
