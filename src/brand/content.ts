@@ -47,7 +47,7 @@ export const cover = {
 
 export const ticker = ["Remember the name", "Model", "Creative", "Influencer"];
 
-// About: an editorial profile in Fiza's voice. DRAFT copy, pending Fiza's approval.
+// About: an editorial profile in Fiza's voice (copy approved by Fiza).
 export const about = {
   quote: "Discipline is my favorite accessory.",
   paragraphs: [
