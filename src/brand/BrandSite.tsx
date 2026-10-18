@@ -366,7 +366,7 @@ function Digis() {
         <div className="mb-8 flex items-end justify-between px-5 md:mb-10 md:px-10">
           <div>
             <h2 className="font-serif-display text-6xl italic md:text-8xl">Digis</h2>
-            <p className="font-mono-caps mt-3 text-xs text-white/80">Real digis unretouched · AI-rendered angles marked</p>
+            <p className="font-mono-caps mt-3 text-xs text-white/80">For agencies & casting</p>
           </div>
           <p className="font-mono-caps hidden text-xs text-white/80 md:block">Keep scrolling →</p>
         </div>
@@ -389,7 +389,6 @@ function Digis() {
                 <span>{String(i + 1).padStart(2, "0")}</span>
                 <span className="text-right">
                   {b.caption}
-                  {b.ai && <span className="ml-2 rounded bg-white/15 px-1.5 py-0.5 text-[10px] text-white">AI</span>}
                 </span>
               </figcaption>
             </figure>
@@ -467,15 +466,17 @@ function NextIssue() {
 }
 
 // Scroll-driven "step into the frame": the pink photo starts as a small camera viewfinder,
-// opens out to fill the screen as you scroll, then the shutter flashes.
-function IntoFrame() {
+// opens out to fill the screen as you scroll, the shutter flashes, then the words and
+// contact details type themselves onto the photo.
+function BackCover() {
   const [flash, setFlash] = useState(false);
   const fired = useRef(false);
-  const ref = useScrollProgress<HTMLDivElement>((p, el) => {
-    // The sticky stage is pinned while p runs ~0.3 → 0.7; map that to 0 → 1
-    const t = Math.min(1, Math.max(0, (p - 0.28) / 0.4));
-    const eased = 1 - Math.pow(1 - t, 3);
-    el.style.setProperty("--open", eased.toFixed(4));
+  const ref = useScrollProgress<HTMLElement>((p, el) => {
+    // The stage is pinned while p runs ~0.28 → 0.72: open the frame first, then reveal the text
+    const t = Math.min(1, Math.max(0, (p - 0.24) / 0.28));
+    const show = Math.min(1, Math.max(0, (p - 0.5) / 0.16));
+    el.style.setProperty("--open", (1 - Math.pow(1 - t, 3)).toFixed(4));
+    el.style.setProperty("--show", show.toFixed(4));
     if (t >= 1 && !fired.current) {
       fired.current = true;
       setFlash(true);
@@ -484,10 +485,16 @@ function IntoFrame() {
     if (t < 0.6) fired.current = false;
   });
 
+  const links = [
+    { href: profile.instagram, label: "Instagram", value: profile.instagramHandle },
+    { href: profile.tiktok, label: "TikTok", value: profile.tiktokHandle },
+  ];
+
   return (
-    <div ref={ref} className="relative h-[220vh]">
-      <div className="sticky top-0 h-screen overflow-hidden bg-[#d9668f]">
-        {/* The photo, clipped to a shrinking-then-growing window */}
+    <section id="contact" ref={ref} className="relative h-[260vh] bg-[#d9668f] text-white">
+      <h2 className="sr-only">Contact: bookings, collaborations and press</h2>
+      <div className="sticky top-0 h-screen overflow-hidden">
+        {/* The photo, clipped to a window that opens as you scroll */}
         <div
           className="absolute inset-0"
           style={{
@@ -497,11 +504,12 @@ function IntoFrame() {
         >
           <img
             src={pink}
-            alt={`${profile.name} on a pink backdrop. Start the spark. Connect with me.`}
+            alt={`${profile.name} winking on a pink backdrop`}
             loading="lazy"
             className="h-full w-full object-cover"
             style={{ transform: "scale(calc(1.35 - var(--open, 0) * 0.35))" }}
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent md:hidden" />
         </div>
 
         {/* Viewfinder overlay: corner brackets ride the edge of the window, then fade as it fills the screen */}
@@ -523,50 +531,72 @@ function IntoFrame() {
           <span className="absolute left-1/2 top-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 border border-white/70" />
         </div>
 
+        {/* Words + contact details, written onto the photo once it's open */}
+        <div className="absolute inset-0 flex flex-col justify-between px-6 pb-10 pt-24 [text-shadow:0_1px_12px_rgba(0,0,0,0.25)] md:block md:p-0">
+          <div className="md:absolute md:left-[7%] md:top-[24%] md:max-w-[30%]">
+            <TypeLine text="Start the spark." step={0} />
+            <Appear step={1}>
+              <a
+                href={`mailto:${profile.email}`}
+                data-cursor="Say hi"
+                className="font-serif-display group mt-5 inline-flex items-center gap-3 text-5xl italic leading-none md:text-7xl"
+              >
+                Let's talk
+                <ArrowUpRight className="h-[0.7em] w-[0.7em] transition-transform duration-500 group-hover:-translate-y-2 group-hover:translate-x-2" />
+              </a>
+              <p className="mt-3 text-base text-white/90 md:text-lg">{profile.email}</p>
+              <p className="font-mono-caps mt-1 text-[11px] text-white/80">Bookings · collaborations · press</p>
+            </Appear>
+          </div>
+
+          <div className="md:absolute md:right-[7%] md:top-[24%] md:w-[26%]">
+            <TypeLine text="Connect with me :)" step={1.5} />
+            <div className="mt-4 grid gap-3 md:mt-6 md:gap-4">
+              {links.map((l, i) => (
+                <Appear key={l.label} step={2.2 + i * 0.5}>
+                  <a href={l.href} target="_blank" rel="noreferrer" className="group flex items-center justify-between border-b border-white/40 pb-2 md:pb-3">
+                    <span>
+                      <span className="font-mono-caps block text-[11px] text-white/80">{l.label}</span>
+                      <span className="font-serif-display block text-2xl md:text-3xl">{l.value}</span>
+                    </span>
+                    <ArrowUpRight className="h-5 w-5 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
+                  </a>
+                </Appear>
+              ))}
+            </div>
+          </div>
+
+          <div className="hidden md:absolute md:bottom-[9%] md:right-[7%] md:block">
+            <TypeLine text="Los Angeles, California" step={3.4} />
+          </div>
+        </div>
+
         {/* Shutter flash once the frame is fully open */}
         <div className={`pointer-events-none absolute inset-0 bg-white ${flash ? "shutter-flash" : "opacity-0"}`} aria-hidden="true" />
       </div>
-    </div>
+    </section>
   );
 }
 
-function BackCover() {
-  const links = [
-    { href: profile.instagram, label: "Instagram", value: profile.instagramHandle },
-    { href: profile.tiktok, label: "TikTok", value: profile.tiktokHandle },
-  ];
+// Each text item has a `step`; --show (0 → 1) runs through the steps in order.
+const SHOW_STEPS = 4.2;
+
+// Mono caps line that wipes on left to right, like it's being typed.
+function TypeLine({ text, step }: { text: string; step: number }) {
   return (
-    <section id="contact" className="bg-[#d9668f] text-white">
-      <IntoFrame />
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:grid-cols-2 md:px-10 md:py-20">
-        <Reveal>
-          <p className="font-mono-caps text-xs text-white/80">Bookings, collaborations & press</p>
-          <a
-            href={`mailto:${profile.email}`}
-            data-cursor="Say hi"
-            className="font-serif-display group mt-4 inline-flex items-center gap-3 text-6xl italic leading-none md:text-7xl"
-          >
-            Let's talk
-            <ArrowUpRight className="h-[0.7em] w-[0.7em] transition-transform duration-500 group-hover:-translate-y-2 group-hover:translate-x-2" />
-          </a>
-          <p className="mt-3 text-lg text-white/85">{profile.email}</p>
-        </Reveal>
-        <div className="grid content-end gap-5">
-          {links.map((l, i) => (
-            <Reveal key={l.label} delay={i * 120}>
-              <a href={l.href} target="_blank" rel="noreferrer" className="group flex items-center justify-between border-b border-white/30 pb-4">
-                <span>
-                  <span className="font-mono-caps block text-xs text-white/80">{l.label}</span>
-                  <span className="font-serif-display mt-1 block text-3xl">{l.value}</span>
-                </span>
-                <ArrowUpRight className="h-6 w-6 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
-              </a>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
+    <p
+      className="font-mono-caps text-xs text-white md:text-sm"
+      style={{ clipPath: `inset(0 calc(100% - clamp(0, var(--show, 0) * ${SHOW_STEPS} - ${step}, 1) * 100%) -4px 0)` }}
+    >
+      {text}
+    </p>
   );
+}
+
+// Fades and lifts into place when its step comes up.
+function Appear({ step, children }: { step: number; children: React.ReactNode }) {
+  const v = `clamp(0, var(--show, 0) * ${SHOW_STEPS} - ${step}, 1)`;
+  return <div style={{ opacity: v, transform: `translateY(calc((1 - ${v}) * 16px))` }}>{children}</div>;
 }
 
 function Footer() {

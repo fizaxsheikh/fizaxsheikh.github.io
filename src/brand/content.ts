@@ -60,7 +60,7 @@ export const about = {
 };
 
 // Digitals in the order agencies expect (headshots, mid, full length, profiles, back).
-// `ai: true` marks AI-generated angles; they get a visible "AI" tag on the site.
+// `ai: true` marks AI-generated angles (noted in alt text only).
 export const digis: { src: string; caption: string; ai?: boolean }[] = [
   { src: digiHeadshot, caption: "Headshot" },
   { src: digiSmile, caption: "Smile" },
