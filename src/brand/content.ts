@@ -8,6 +8,9 @@ import digiFull from "../assets/photos/digi-full.jpg";
 import digiFullRelaxed from "../assets/photos/digi-full-relaxed.jpg";
 import digiProfile from "../assets/photos/digi-profile.jpg";
 import digiProfileLeft from "../assets/photos/digi-profile-left.jpg";
+import aiProfileRight from "../assets/photos/ai-full-profile-right.jpg";
+import aiProfileLeft from "../assets/photos/ai-full-profile-left.jpg";
+import aiBack from "../assets/photos/ai-full-back.jpg";
 import alo from "../assets/photos/alo.jpg";
 import onTheGo from "../assets/reels/on-the-go.mp4";
 import onTheGoPoster from "../assets/reels/on-the-go-poster.jpg";
@@ -56,8 +59,9 @@ export const about = {
   video: { src: onTheGo, poster: onTheGoPoster, caption: "On the go" },
 };
 
-// Digitals: unretouched, in the order agencies expect (headshots, mid, full length, profiles).
-export const digis = [
+// Digitals in the order agencies expect (headshots, mid, full length, profiles, back).
+// `ai: true` marks AI-generated angles; they get a visible "AI" tag on the site.
+export const digis: { src: string; caption: string; ai?: boolean }[] = [
   { src: digiHeadshot, caption: "Headshot" },
   { src: digiSmile, caption: "Smile" },
   { src: digiFront, caption: "Waist up" },
@@ -65,6 +69,9 @@ export const digis = [
   { src: digiFullRelaxed, caption: "Full length, relaxed" },
   { src: digiProfile, caption: "Profile, right" },
   { src: digiProfileLeft, caption: "Profile, left" },
+  { src: aiProfileRight, caption: "Full length, profile right", ai: true },
+  { src: aiProfileLeft, caption: "Full length, profile left", ai: true },
+  { src: aiBack, caption: "Full length, back", ai: true },
 ];
 
 // Brands worked with, shown in About.

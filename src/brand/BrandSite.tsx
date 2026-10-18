@@ -366,7 +366,7 @@ function Digis() {
         <div className="mb-8 flex items-end justify-between px-5 md:mb-10 md:px-10">
           <div>
             <h2 className="font-serif-display text-6xl italic md:text-8xl">Digis</h2>
-            <p className="font-mono-caps mt-3 text-xs text-white/80">Unretouched · no filters · for agencies & casting</p>
+            <p className="font-mono-caps mt-3 text-xs text-white/80">Real digis unretouched · AI-rendered angles marked</p>
           </div>
           <p className="font-mono-caps hidden text-xs text-white/80 md:block">Keep scrolling →</p>
         </div>
@@ -383,11 +383,14 @@ function Digis() {
                 className="photo-hover block aspect-[2/3] max-h-[62vh] w-full overflow-hidden"
                 aria-label={`Open photo: ${b.caption}`}
               >
-                <img src={b.src} alt={b.caption} loading="lazy" className="h-full w-full object-cover" />
+                <img src={b.src} alt={b.ai ? `${b.caption} (AI-generated)` : b.caption} loading="lazy" className="h-full w-full object-cover" />
               </button>
-              <figcaption className="font-mono-caps mt-3 flex justify-between text-xs text-white/80">
+              <figcaption className="font-mono-caps mt-3 flex justify-between gap-3 text-xs text-white/80">
                 <span>{String(i + 1).padStart(2, "0")}</span>
-                <span>{b.caption}</span>
+                <span className="text-right">
+                  {b.caption}
+                  {b.ai && <span className="ml-2 rounded bg-white/15 px-1.5 py-0.5 text-[10px] text-white">AI</span>}
+                </span>
               </figcaption>
             </figure>
           ))}
