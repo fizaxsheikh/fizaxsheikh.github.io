@@ -1,17 +1,20 @@
 // Everything you'd want to edit (words, links, photos) lives in this file.
 // Each photo/video is used in exactly one place on the site.
 import coverBlue from "../assets/photos/cover-blue.jpg";
+import coverCutout from "../assets/photos/cover-cutout.webp";
 import digiHeadshot from "../assets/photos/digi-headshot.jpg";
 import digiSmile from "../assets/photos/digi-smile.jpg";
 import digiFront from "../assets/photos/digi-front.jpg";
 import digiFull from "../assets/photos/digi-full.jpg";
-import digiFullRelaxed from "../assets/photos/digi-full-relaxed.jpg";
-import digiProfile from "../assets/photos/digi-profile.jpg";
-import digiProfileLeft from "../assets/photos/digi-profile-left.jpg";
 import aiProfileRight from "../assets/photos/ai-full-profile-right.jpg";
-import aiProfileLeft from "../assets/photos/ai-full-profile-left.jpg";
 import aiBack from "../assets/photos/ai-full-back.jpg";
 import alo from "../assets/photos/alo.jpg";
+import igWalk from "../assets/photos/ig-walk.jpg";
+import igLounge from "../assets/photos/ig-lounge.jpg";
+import igSunset from "../assets/photos/ig-sunset.jpg";
+import igHike from "../assets/photos/ig-hike.jpg";
+import igDog from "../assets/photos/ig-dog.jpg";
+import ig3am from "../assets/photos/ig-3am.jpg";
 import onTheGo from "../assets/reels/on-the-go.mp4";
 import onTheGoPoster from "../assets/reels/on-the-go-poster.jpg";
 
@@ -31,6 +34,13 @@ export const issue = { number: "01", season: "Fall 2026" };
 
 export const cover = {
   photo: coverBlue,
+  cutout: coverCutout,
+  // Clickable cover lines on the right (desktop)
+  lines: [
+    { text: "Inside: the digis", href: "#digis" },
+    { text: "Pages from the mood board", href: "#moodboard" },
+    { text: "Let's work together", href: "#contact" },
+  ],
   headline: "The one to watch",
   sub: "Model · Creative · Influencer",
 };
@@ -66,21 +76,24 @@ export const digis: { src: string; caption: string; ai?: boolean }[] = [
   { src: digiSmile, caption: "Smile" },
   { src: digiFront, caption: "Waist up" },
   { src: digiFull, caption: "Full length" },
-  { src: digiFullRelaxed, caption: "Full length, relaxed" },
-  { src: digiProfile, caption: "Profile, right" },
-  { src: digiProfileLeft, caption: "Profile, left" },
-  { src: aiProfileRight, caption: "Full length, profile right", ai: true },
-  { src: aiProfileLeft, caption: "Full length, profile left", ai: true },
+  { src: aiProfileRight, caption: "Full length, profile", ai: true },
   { src: aiBack, caption: "Full length, back", ai: true },
 ];
 
 // Brands worked with, shown in About.
-export const workedWith = [{ src: alo, brand: "Alo Wellness Club" }];
+// Brands worked with, shown in About. `src` opens a photo; `href` links to the post.
+export const workedWith: { brand: string; src?: string; href?: string }[] = [
+  { brand: "Alo Wellness Club", src: alo },
+  { brand: "Kreation Organic", href: "https://www.instagram.com/p/DZ-1sRnEkXK/" },
+  { brand: "Facecard", href: "https://www.instagram.com/p/DXKxR1UEkKe/" },
+];
 
-// "In the next issue": the goals list. Set done: true as you hit them.
-export const nextIssue = [
-  { goal: "A magazine cover", done: false },
-  { goal: "A campaign billboard in LA", done: false },
-  { goal: "Walk in fashion week", done: false },
-  { goal: "My own brand", done: false },
+// "On Instagram": recent posts, each linking to the original.
+export const instagramPosts = [
+  { src: igWalk, caption: "walk with me ☀️", href: "https://www.instagram.com/p/DZ-1sRnEkXK/" },
+  { src: igLounge, caption: "live laugh lounge", href: "https://www.instagram.com/p/DXKxR1UEkKe/" },
+  { src: igSunset, caption: "am i tan yet 🌞", href: "https://www.instagram.com/p/DPpV8iAkomx/" },
+  { src: igHike, caption: "keep up slowpoke", href: "https://www.instagram.com/p/DKawADlyq59/" },
+  { src: igDog, caption: "momma's girl 🐶", href: "https://www.instagram.com/p/C5AVKRFuTAQ/" },
+  { src: ig3am, caption: "for ur 3am scenarios", href: "https://www.instagram.com/p/CudaJxCRXln/" },
 ];

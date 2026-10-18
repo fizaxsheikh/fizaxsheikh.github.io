@@ -14,6 +14,9 @@ html {
 }
 
 body {
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  -moz-osx-font-smoothing: grayscale;
   background: var(--paper);
   color: var(--ink);
   font-family: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
@@ -22,10 +25,12 @@ body {
 
 ::selection { background: var(--cobalt); color: var(--paper); }
 
-/* Lower optical size = sturdier hairlines, so the serif stays readable at body-ish sizes */
+/* Optical sizing: sturdy hairlines at small sizes, fine high-contrast detail at large ones */
 .font-serif-display {
   font-family: "Bodoni Moda", "Didot", Georgia, serif;
-  font-variation-settings: "opsz" 18;
+  font-optical-sizing: auto;
+  font-kerning: normal;
+  font-feature-settings: "kern", "liga", "dlig";
 }
 .font-mono-caps {
   font-family: "JetBrains Mono", ui-monospace, monospace;
@@ -130,3 +135,13 @@ body {
   .reveal, .reveal > * { opacity: 1; transform: none; clip-path: none !important; transition: none; }
   .marquee, .grain::after { animation: none; }
 }
+
+/* ---------- Cover ---------- */
+/* Big display sizes get Bodoni's high-contrast cut; small sizes stay sturdy */
+.masthead { font-weight: 800; font-variation-settings: "opsz" 96; letter-spacing: -0.035em; }
+@keyframes cover-rise {
+  from { opacity: 0; transform: translateY(8%); }
+  to { opacity: 1; transform: none; }
+}
+.cover-rise { animation: cover-rise 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s both; }
+@media (prefers-reduced-motion: reduce) { .cover-rise { animation: none; } }

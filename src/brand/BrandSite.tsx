@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { ArrowUpRight, X } from "lucide-react";
-import { about, cover, digis, issue, nextIssue, profile, ticker, workedWith } from "./content";
+import { about, cover, digis, instagramPosts, issue, profile, ticker, workedWith } from "./content";
 import { Cursor, Reveal, prefersReducedMotion, useMediaQuery, useScrollProgress } from "./motion";
 import moodboard from "../assets/photos/moodboard.jpg";
 import pink from "../assets/photos/pink.jpg";
@@ -23,7 +23,7 @@ export function BrandSite() {
           <About />
           <Digis />
           <MoodBoard />
-          <NextIssue />
+          <OnInstagram />
           <BackCover />
         </main>
         <Footer />
@@ -70,27 +70,14 @@ function Cover() {
   const letters = profile.first.toUpperCase().split("");
 
   return (
-    <section id="cover" ref={ref} className="relative h-[100svh] min-h-[620px] overflow-hidden bg-paper">
+    <section id="cover" ref={ref} className="relative h-[100svh] min-h-[640px] overflow-hidden bg-paper">
       <h1 className="sr-only">
         {profile.name}: {profile.titles.join(", ")}
       </h1>
 
-      {/* Cover photo: full-bleed on phones, a centered column under the masthead on desktop */}
-      <div className="absolute inset-0 md:bottom-0 md:left-1/2 md:right-auto md:top-[calc(7.5rem+11vw)] md:w-[min(42vw,600px)] md:-translate-x-1/2">
-        <div className="cover-in h-full w-full overflow-hidden md:[-webkit-mask-composite:source-in] md:[mask-composite:intersect] md:[mask-image:linear-gradient(to_right,transparent,black_14%,black_86%,transparent),linear-gradient(to_bottom,transparent,black_10%)]">
-          <img
-            src={cover.photo}
-            alt={`${profile.name}, cover portrait in a cobalt halter top`}
-            className="h-full w-full object-cover object-[50%_20%]"
-            style={{ transform: "scale(calc(1 + var(--out, 0) * 0.15))" }}
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 md:hidden" />
-      </div>
-
       {/* Issue line */}
       <div
-        className="font-mono-caps fade-up absolute inset-x-0 top-16 flex justify-between px-5 text-xs text-white md:top-24 md:px-10 md:text-xs md:text-[color:var(--ink)]"
+        className="font-mono-caps fade-up absolute inset-x-0 top-[4.5rem] z-30 flex justify-between px-5 text-[11px] md:top-24 md:px-10 md:text-xs"
         style={{ animationDelay: "1.2s" }}
       >
         <span>Issue Nº {issue.number}</span>
@@ -98,29 +85,42 @@ function Cover() {
         <span>{issue.season}</span>
       </div>
 
-      {/* Masthead */}
+      {/* Masthead, behind the cut-out so the hair sits in front of the letters */}
       <div
-        className="pointer-events-none absolute inset-x-0 top-[5.5rem] flex justify-center md:top-[7.5rem]"
-        style={{ transform: "translateY(calc(var(--out, 0) * -40vh))" }}
+        className="pointer-events-none absolute inset-x-0 top-[6.5rem] z-10 flex justify-center md:top-[7.5rem]"
+        style={{ transform: "translateY(calc(var(--out, 0) * -30vh))" }}
         aria-hidden="true"
       >
-        <div className="font-serif-display flex overflow-hidden text-[34vw] font-black leading-[0.8] tracking-[-0.04em] text-cobalt md:text-[23vw]">
+        <div className="font-serif-display masthead flex overflow-hidden text-[36vw] leading-[0.78] text-cobalt md:text-[25vw]">
           {letters.map((l, i) => (
-            <span key={i} className="letter" style={{ animationDelay: `${0.9 + i * 0.09}s` }}>
+            <span key={i} className="letter" style={{ animationDelay: `${0.5 + i * 0.09}s` }}>
               {l}
             </span>
           ))}
         </div>
       </div>
 
+      {/* Cover star: photo cut-out layered over the masthead */}
+      <img
+        src={cover.cutout}
+        alt={`${profile.name}, cover portrait in a cobalt halter top`}
+        className="cover-rise absolute bottom-0 left-1/2 z-20 h-[74svh] w-auto max-w-none [-webkit-mask-composite:source-in] [mask-composite:intersect] [mask-image:linear-gradient(to_right,transparent,black_9%,black_91%,transparent),linear-gradient(to_top,transparent,black_12%)] md:h-[84svh]"
+        style={{ translate: "-50% calc(var(--out, 0) * 6vh)" }}
+      />
+
       {/* Cover lines */}
-      <div className="absolute inset-x-0 bottom-0 flex items-end justify-between px-5 pb-8 text-white md:px-10 md:pb-10 md:text-[color:var(--ink)]">
-        <div className="fade-up space-y-3" style={{ animationDelay: "1.6s" }}>
-          <p className="font-serif-display text-4xl italic leading-none md:text-5xl lg:text-6xl">{cover.headline}.</p>
-          <p className="font-mono-caps text-xs md:text-xs">{cover.sub}</p>
+      <div className="absolute inset-x-0 bottom-0 z-30 flex items-end justify-between px-5 pb-6 md:px-10 md:pb-10">
+        <div className="fade-up max-w-[46%] space-y-2 rounded-sm bg-paper/70 p-2 backdrop-blur-[2px] md:max-w-none md:space-y-3 md:bg-transparent md:p-0 md:backdrop-blur-0" style={{ animationDelay: "1.4s" }}>
+          <p className="font-serif-display text-3xl italic leading-[0.95] md:text-5xl lg:text-6xl">{cover.headline}.</p>
+          <p className="font-mono-caps text-[10px] md:text-xs">{cover.sub}</p>
         </div>
-        <div className="fade-up hidden md:block" style={{ animationDelay: "1.8s" }}>
-          <Barcode className="h-12 w-36" />
+        <div className="fade-up hidden space-y-3 text-right md:block" style={{ animationDelay: "1.6s" }}>
+          {cover.lines.map((l) => (
+            <a key={l.href} href={l.href} className="font-serif-display block text-xl transition-colors hover:text-cobalt lg:text-2xl">
+              {l.text} <span className="text-cobalt">→</span>
+            </a>
+          ))}
+          <Barcode className="ml-auto mt-4 h-11 w-32" />
         </div>
       </div>
     </section>
@@ -167,14 +167,16 @@ function Ticker() {
 // One look per phrase in the About collage. Keys match `style` in content.ts.
 const ABOUT_STYLES: Record<string, { className: string; style?: React.CSSProperties; before?: string; after?: string }> = {
   model: { className: "font-serif-display text-5xl italic text-cobalt md:text-7xl" },
-  creative: { className: "text-5xl font-black md:text-7xl" },
+  creative: { className: "text-5xl md:text-7xl", style: { fontFamily: "'Inter Tight', sans-serif", fontWeight: 900, letterSpacing: "-0.04em" } },
   la: {
-    className: "rounded-md border-[3px] border-white bg-[#0b6b3a] px-4 py-1 font-sans text-2xl font-bold text-white shadow-[0_0_0_3px_#0b6b3a] md:text-4xl",
+    className: "rounded-lg border-[3px] border-white bg-[#00693e] px-4 pb-1 pt-2 text-2xl text-white shadow-[0_0_0_3px_#00693e,0_6px_14px_rgba(0,0,0,0.18)] md:text-4xl",
+    style: { fontFamily: "Overpass, sans-serif", fontWeight: 800, letterSpacing: "0.01em" },
     before: "↑ ",
   },
   ucla: { className: "text-4xl text-[#2774AE] md:text-6xl", style: { fontFamily: "Graduate, serif", textShadow: "3px 3px 0 #FFD100" } },
   finance: {
-    className: "rounded border border-[#0a8a4a]/40 bg-[#0a8a4a]/10 px-3 py-1 font-mono text-lg text-[#0a7a40] md:text-2xl",
+    className: "rounded border border-[#0a8a4a]/40 bg-[#0a8a4a]/10 px-3 py-1 text-lg text-[#0a7a40] md:text-2xl",
+    style: { fontFamily: "'JetBrains Mono', monospace", fontWeight: 500 },
     after: " ▲ 2.4%",
   },
   desi: {
@@ -182,7 +184,7 @@ const ABOUT_STYLES: Record<string, { className: string; style?: React.CSSPropert
     style: { fontFamily: "'Playfair Display', serif", fontStyle: "italic", fontWeight: 900 },
   },
   genz: { className: "bg-black px-3 py-2 text-lg text-[#7CFF6B] md:text-2xl", style: { fontFamily: "'Press Start 2P', monospace" } },
-  gym: { className: "-skew-x-12 text-5xl uppercase tracking-tight md:text-7xl", style: { fontFamily: "Anton, sans-serif" } },
+  gym: { className: "-skew-x-12 text-5xl uppercase tracking-tight md:text-7xl", style: { fontFamily: "Anton, sans-serif", textShadow: "3px 3px 0 #3346e8" } },
   dog: { className: "text-5xl text-[#7a4a22] md:text-6xl", style: { fontFamily: "Caveat, cursive" }, after: " 🐾" },
   hoops: { className: "text-4xl uppercase text-[#e8590c] md:text-6xl", style: { fontFamily: "Anton, sans-serif" }, before: "🏀 " },
   horror: { className: "text-4xl text-[#b3001b] md:text-6xl", style: { fontFamily: "Creepster, cursive" } },
@@ -240,7 +242,7 @@ function About() {
           <p className="font-serif-display mt-8 text-2xl italic md:text-3xl">{about.outro}</p>
         </Reveal>
       </div>
-      <div className="w-full">
+      <div className="w-full md:sticky md:top-28 md:self-start">
         <Reveal from="curtain">
           <div className="aspect-video">
             <VideoTile src={about.video.src} poster={about.video.poster} title={about.video.caption}>
@@ -256,24 +258,21 @@ function About() {
 
 function WorkedWith() {
   const openPhoto = useContext(LightboxContext);
+  const brand = "font-serif-display text-xl italic underline decoration-black/25 underline-offset-4 transition-colors hover:text-cobalt hover:decoration-[color:var(--cobalt)]";
   return (
-    <Reveal delay={200} className="mt-6 flex items-center gap-4">
+    <Reveal delay={200} className="mt-6 flex flex-wrap items-baseline gap-x-5 gap-y-2">
       <span className="font-mono-caps text-xs text-black/70">Worked with</span>
-      {workedWith.map((w) => (
-        <button
-          key={w.brand}
-          type="button"
-          data-cursor="View"
-          onClick={() => openPhoto({ src: w.src, caption: w.brand })}
-          className="group flex items-center gap-3"
-          aria-label={`Open photo: ${w.brand}`}
-        >
-          <img src={w.src} alt="" className="h-14 w-10 object-cover transition-transform duration-300 group-hover:scale-110" />
-          <span className="font-serif-display text-xl italic underline decoration-black/20 underline-offset-4 group-hover:decoration-[color:var(--cobalt)]">
+      {workedWith.map((w) =>
+        w.src ? (
+          <button key={w.brand} type="button" data-cursor="View" onClick={() => openPhoto({ src: w.src!, caption: w.brand })} className={brand}>
             {w.brand}
-          </span>
-        </button>
-      ))}
+          </button>
+        ) : (
+          <a key={w.brand} href={w.href} target="_blank" rel="noreferrer" className={brand}>
+            {w.brand}
+          </a>
+        ),
+      )}
     </Reveal>
   );
 }
@@ -408,7 +407,7 @@ function MoodBoard() {
   const ref = useScrollProgress<HTMLElement>((p, el) => el.style.setProperty("--mb", p.toFixed(4)));
   const openPhoto = useContext(LightboxContext);
   return (
-    <section id="moodboard" ref={ref} className="scroll-mt-16 overflow-hidden bg-[#e9e2d6] py-16 md:py-24">
+    <section id="moodboard" ref={ref} className="scroll-mt-16 overflow-hidden bg-[#e9e2d6] pt-16 md:pt-24">
       <div className="mx-auto mb-8 flex max-w-7xl flex-wrap items-end justify-between gap-4 px-5 md:px-10">
         <Reveal>
           <h2 className="font-serif-display text-6xl italic md:text-8xl">The Mood Board</h2>
@@ -417,12 +416,12 @@ function MoodBoard() {
           <p className="font-mono-caps text-xs text-black/70">Pages from my life, cut & taped</p>
         </Reveal>
       </div>
-      <Reveal from="curtain" className="mx-auto max-w-[1500px] px-3 md:px-10">
+      <Reveal from="curtain" className="w-full">
         <button
           type="button"
           data-cursor="View"
           onClick={() => openPhoto({ src: moodboard, caption: "The Mood Board" })}
-          className="block w-full overflow-hidden shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)]"
+          className="block w-full overflow-hidden"
           aria-label="Open the mood board full screen"
         >
           <img
@@ -438,29 +437,31 @@ function MoodBoard() {
   );
 }
 
-function NextIssue() {
+function OnInstagram() {
   return (
-    <section className="mx-auto max-w-7xl px-5 py-20 md:px-10 md:py-28">
-      <Reveal>
-        <h2 className="font-serif-display text-5xl md:text-7xl">
-          In the next issue<span className="text-cobalt">…</span>
-        </h2>
-      </Reveal>
-      <ol className="mt-10 grid border-t border-black/15 md:grid-cols-2 md:gap-x-12">
-        {nextIssue.map((n, i) => (
-          <Reveal as="li" key={n.goal} from="left" delay={i * 90} className="group flex items-baseline gap-5 border-b border-black/15 py-5">
-            <span className="font-mono-caps w-6 text-xs text-black/70">{String(i + 1).padStart(2, "0")}</span>
-            <span
-              className={`font-serif-display flex-1 text-2xl transition-transform duration-500 group-hover:translate-x-2 md:text-4xl ${
-                n.done ? "line-through decoration-[color:var(--cobalt)] decoration-2" : ""
-              }`}
-            >
-              {n.goal}
-            </span>
-            <span className="font-mono-caps text-xs text-black/70">{n.done ? "Done ✓" : "Loading…"}</span>
+    <section className="bg-paper pb-16 pt-14 md:pb-24 md:pt-20">
+      <div className="mb-8 flex flex-wrap items-end justify-between gap-4 px-5 md:px-10">
+        <Reveal>
+          <h2 className="font-serif-display text-5xl italic md:text-7xl">On Instagram</h2>
+        </Reveal>
+        <Reveal delay={120}>
+          <a href={profile.instagram} target="_blank" rel="noreferrer" className="font-mono-caps text-xs text-black/70 hover:text-cobalt">
+            Follow {profile.instagramHandle} ↗
+          </a>
+        </Reveal>
+      </div>
+      <div className="grid grid-cols-3 gap-1 md:grid-cols-6">
+        {instagramPosts.map((p, i) => (
+          <Reveal key={p.href} delay={i * 70}>
+            <a href={p.href} target="_blank" rel="noreferrer" data-cursor="Open" className="group relative block aspect-[4/5] overflow-hidden">
+              <img src={p.src} alt={p.caption} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <span className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-transparent p-3 text-sm text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                {p.caption}
+              </span>
+            </a>
           </Reveal>
         ))}
-      </ol>
+      </div>
     </section>
   );
 }
@@ -566,8 +567,9 @@ function BackCover() {
             </div>
           </div>
 
-          <div className="hidden md:absolute md:bottom-[9%] md:right-[7%] md:block">
-            <TypeLine text="Los Angeles, California" step={3.4} />
+          <div className="hidden text-right md:absolute md:bottom-[8%] md:right-[7%] md:block">
+            <TypeLine text="Los Angeles, California" step={3.2} />
+            <TypeLine text={`${profile.instagramHandle} · ${profile.tiktokHandle}`} step={4} />
           </div>
         </div>
 
@@ -579,7 +581,7 @@ function BackCover() {
 }
 
 // Each text item has a `step`; --show (0 → 1) runs through the steps in order.
-const SHOW_STEPS = 4.2;
+const SHOW_STEPS = 5;
 
 // Mono caps line that wipes on left to right, like it's being typed.
 function TypeLine({ text, step }: { text: string; step: number }) {
