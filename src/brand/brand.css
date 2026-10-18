@@ -22,14 +22,15 @@ body {
 
 ::selection { background: var(--cobalt); color: var(--paper); }
 
+/* Lower optical size = sturdier hairlines, so the serif stays readable at body-ish sizes */
 .font-serif-display {
   font-family: "Bodoni Moda", "Didot", Georgia, serif;
-  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 18;
 }
 .font-mono-caps {
   font-family: "JetBrains Mono", ui-monospace, monospace;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
 }
 
 .text-cobalt { color: var(--cobalt); }
@@ -116,8 +117,15 @@ body {
 .cursor-dot.is-big { width: 86px; height: 86px; margin: -43px 0 0 -43px; mix-blend-mode: normal; }
 .cursor-dot.is-big span { opacity: 1; }
 
+/* ---------- Contact viewfinder ---------- */
+@keyframes rec { 50% { opacity: 0.2; } }
+.rec-dot { animation: rec 1s steps(1) infinite; }
+@keyframes shutter { from { opacity: 0.85; } to { opacity: 0; } }
+.shutter-flash { animation: shutter 0.6s ease-out forwards; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .rec-dot, .shutter-flash { animation: none; opacity: 0; }
   .letter, .cover-in, .fade-up { animation: none; transform: none; opacity: 1; clip-path: none; }
   .reveal, .reveal > * { opacity: 1; transform: none; clip-path: none !important; transition: none; }
   .marquee, .grain::after { animation: none; }
