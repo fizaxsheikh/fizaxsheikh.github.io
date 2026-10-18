@@ -3,6 +3,7 @@
 import coverBlue from "../assets/photos/cover-blue.jpg";
 import digiFront from "../assets/photos/digi-front.jpg";
 import digiProfile from "../assets/photos/digi-profile.jpg";
+import alo from "../assets/photos/alo.jpg";
 import onTheGo from "../assets/reels/on-the-go.mp4";
 import onTheGoPoster from "../assets/reels/on-the-go-poster.jpg";
 
@@ -43,6 +44,7 @@ export const about = {
 export const book = [
   { src: digiFront, caption: "Digital: front" },
   { src: digiProfile, caption: "Digital: profile" },
+  { src: alo, caption: "Alo Wellness Club" },
 ];
 
 // "In the next issue": the goals list. Set done: true as you hit them.
