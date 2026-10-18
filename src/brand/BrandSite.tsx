@@ -353,7 +353,7 @@ function MoodBoard() {
         >
           <img
             src={moodboard}
-            alt="Fiza's mood board: photos from the gym, UCLA, city trips and hikes with her dog, plus notes on her niches (beauty & style, lifestyle & wellness, career) and simple pleasures (gaming, basketball, video games, horror movies, R&B and dancing, nightlife)."
+            alt="Fiza's mood board: photos from the gym, UCLA, city trips and hikes with Fiza's dog, plus notes on Fiza's niches (beauty & style, lifestyle & wellness, career) and simple pleasures (gaming, basketball, video games, horror movies, R&B and dancing, nightlife)."
             loading="lazy"
             className="block w-full"
             style={{ transform: "scale(calc(1.08 - var(--mb, 0) * 0.08))" }}
